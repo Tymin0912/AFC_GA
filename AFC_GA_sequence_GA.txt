@@ -1,0 +1,121 @@
+{{
+    //// Commonn Parameter Definition
+    const sampling_rate = {basic_HDAWG_params[sampling_rate]};      // Hz; Sampling rate, should be the same as what you set on the right panel of HDAWG!
+    const channel_606 = {basic_HDAWG_params[channel_AFC]};          // int; HDAWG wave output for AFC
+    const channel_995 = {basic_HDAWG_params[channel_CP]};           // int; HDAWG wave output for Control
+    const channel_1550 = {basic_HDAWG_params[channel_SP]};          // int; HDAWG wave output for Signal
+    const trig_read = {basic_HDAWG_params[trig_read]};                // int; set trigger values
+    const trig_in = {basic_HDAWG_params[trig_in]};
+    const trig_out = {basic_HDAWG_params[trig_out]};
+
+    // Pit Parameters (606)
+    const pit_no_pulses = {pit_params[no_pulses]};
+    const pit_f_0 = {pit_params[f_0]};                              // Hz;
+    const pit_amplitude = {pit_params[amplitude]};                  // V;
+    const pit_delta_f = {pit_params[freq_sweep]};                   // Hz;
+    const pit_f_start = (pit_f_0 - pit_delta_f)/sampling_rate;
+    const pit_f_stop = (pit_f_0 + pit_delta_f)/sampling_rate;
+    const pit_duration = {pit_params[duration]};                    // s;
+    const pit_duration_samples = round(pit_duration*sampling_rate/16)*16;
+    const pit_delay = {pit_params[delay]};                          // s;
+    const pit_delay_samples = round(pit_delay*sampling_rate/16)*16;
+    const pit_phase = {pit_params[phase]}; 
+
+    // Burn back pulses parameters (606)
+    const bb_no_pulses = {burn_back_params[no_pulses]};             //
+    const bb_f_0 = {burn_back_params[f_0]};                         // Hz;
+    const bb_amplitude = {burn_back_params[amplitude]};             // V;
+    const bb_delta_f = {burn_back_params[freq_sweep]};              // Hz;
+    const bb_f_start = (bb_f_0 - bb_delta_f)/sampling_rate;
+    const bb_f_stop = (bb_f_0 + bb_delta_f)/sampling_rate;
+    const bb_duration = {burn_back_params[duration]};               // s;
+    const bb_duration_samples = round(bb_duration*sampling_rate/16)*16;
+    const bb_delay = {burn_back_params[delay]};                     // s;
+    const bb_delay_samples = round(bb_delay*sampling_rate/16)*16;
+    const bb_phase = {burn_back_params[phase]};
+
+    // AFC pulses parameters (606)
+    const AFC_no_pulses = {AFC_params[no_pulses]};                  //
+    const AFC_tau = {AFC_params[tau]};                              // s;
+    const AFC_tau_samples = round(AFC_tau*sampling_rate/16)*16;
+    const AFC_delta = {AFC_params[delta]};                          // Hz;
+    const AFC_no_teeth = {AFC_params[no_teeth]};                    //
+    const AFC_no_holes = {AFC_params[no_holes]};                    // 
+    const AFC_f_0 = {AFC_params[f_0]};                              // Hz; 
+    const AFC_amplitude = {AFC_params[amplitude]};                  // V;
+    const AFC_duration = {AFC_params[duration]};                    // s;
+    const AFC_duration_samples = round(AFC_duration*sampling_rate/16)*16;
+    const AFC_no_periods = AFC_f_0*AFC_duration;
+    const AFC_delay = {AFC_params[delay]};                          // s;
+    const AFC_delay_samples = round(AFC_delay*sampling_rate/16)*16;
+    const AFC_phase = {AFC_params[phase]};
+
+   // Read Parameters (606)
+    const read_f_0 = {read_params[f_0]};                            // Hz;
+    const read_amplitude = {read_params[amplitude]};                // V;
+    const read_delta_f = {read_params[freq_sweep]};                 // Hz;
+    const read_f_start = (read_f_0 - read_delta_f)/sampling_rate;
+    const read_f_stop = (read_f_0 + read_delta_f)/sampling_rate;
+    const read_duration = {read_params[duration]};                  // s;
+    const read_duration_samples = round(read_duration*sampling_rate/16)*16;
+    const read_phase = {read_params[phase]};
+
+    // Shuffle Pulse Parameters (606)
+    const shuffle_delay = {shuffle_params[delay]};                                  // s; 
+    const shuffle_delay_samples = round(shuffle_delay*sampling_rate/16)*16;         //
+    const shuffle_f_0 = {shuffle_params[f_0]};                                      // Hz; 
+    const shuffle_amplitude = {shuffle_params[amplitude]};                          // ; 
+    const shuffle_delta_f = {shuffle_params[freq_sweep]};                           // Hz; 
+    const shuffle_f_start = (shuffle_f_0 - shuffle_delta_f)/sampling_rate;          //Hz; 
+    const shuffle_f_stop = (shuffle_f_0 + shuffle_delta_f)/sampling_rate;           //Hz; 
+    const shuffle_duration = {shuffle_params[duration]};                            // s; 
+    const shuffle_duration_samples = round(shuffle_duration*sampling_rate/16)*16;   
+    const shuffle_phase = {shuffle_params[phase]};
+
+   //// Waveform definition
+
+    // Pit waveform (606)
+    wave pit_waveform = chirp(pit_duration_samples, pit_amplitude, pit_f_start, pit_f_stop, pit_phase);
+
+    // Burn back waveform (606)
+    wave bb_waveform = chirp(bb_duration_samples, bb_amplitude, bb_f_start, bb_f_stop, bb_phase);
+
+    // AFC waveform (606)
+    cvar i;
+
+    for (i = 0; i < (AFC_no_holes); i++) {{
+        wave AFC_tooth = sine(AFC_duration_samples, AFC_amplitude, AFC_phase, AFC_duration*(AFC_f_0 + (AFC_delta*(AFC_no_teeth/2 - AFC_no_holes + i))/2));
+        assignWaveIndex(channel_606, AFC_tooth, i);
+    }}
+
+    // Reading waveform (606)
+    wave marker_read_low = marker(read_duration_samples/2,0);
+    wave marker_read_high = marker(read_duration_samples/2, trig_read);
+    wave marker_read = join(marker_read_low, marker_read_high);
+
+    wave read_waveform = chirp(read_duration_samples, read_amplitude, read_f_start, read_f_stop, read_phase) + marker_read;
+
+    // Shuffle waveform (606)
+    wave shuffle_waveform = chirp(shuffle_duration_samples, shuffle_amplitude, shuffle_f_start, shuffle_f_stop, shuffle_phase);
+
+    //// Pulse sequence
+
+    // Pit pulses (606)
+    repeat(pit_no_pulses){{
+        playWave(channel_606, pit_waveform);
+        playZero(pit_delay_samples);
+    }}
+
+    // Burning pulses (606)
+    repeat(bb_no_pulses){{
+        playWave(channel_606 ,bb_waveform);
+        playZero(bb_delay_samples);
+    }}
+
+    // Read pulse (606)
+    playWave(channel_606, read_waveform);
+
+    // Shuffle pulse (606)
+    playWave(channel_606, shuffle_waveform);
+
+}}
