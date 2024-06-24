@@ -257,20 +257,13 @@ time taken: 19s
 
 
 
+Date: 24/06/2024
 
 Goals WK2:
 - Make a cut off for when the efficency gets to a certain percentage instead of num_generations.
 - Learn how code for the experiment works.
 - Implement GA into code.
 - Run tests to see what mutation_range is best
-
-mutation_range TEST:
-Look at how big the range should be to get better efficency
-
-Range:
-'no_pulses': 1-1000
-'f_0': 10E5-500E6
-'amplitude': 0.001-0.21
-'freq_sweep','tau': 1E-673.5E6
-'duration': 1E-6-100E-6 
-'delay': 5E-6-100E-5
+- Create a complex test function
+write a random function have a and optimize area under it 
+make a test function that looks at a feature of the function (area, etc)
