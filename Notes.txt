@@ -1,0 +1,276 @@
+
+
+Date: 21/06/24
+
+Running test to see what parameters affect final fitness.
+Test 1: Changing the num_generations
+Test 2: Changing the population_size 
+Test 3: Changing the percentage of parents 
+
+Conclusion: 
+Test 1: Higher num_generations the better Average Fitness but the best fitness remains relatively high
+Test 2: Small increase in average fitness and best fitness for larger population 
+Test 3: Not much of a change 50% seems best
+
+The issue with the efficency dropping was the the mutation bounds it was not calabrated correctly 
+It now has been fixed and fitness is back to 99%
+
+Good General parameters:
+num_generations = 200   # Number of generations
+population_size = 10000   # Number of individuals in each generation
+num_parents = 5000        # Number of parents selected to breed
+
+
+Test 1:
+Parameters:
+population_size = 10000   # Number of individuals in each generation
+num_variables = 5        # Number of parameters to optimize
+num_parents = 5000        # Number of parents selected to breed
+crossover_rate = 0.8     # Probability of crossover
+mutation_rate = 0.1      # Probability of mutation
+mutation_range = [1, 5E5, 0.01, 1E5, 5E-7, 5E-7]       # Range of mutation This has to be adjusted for test solution
+lower_bounds = [10, 50E6, 0.1, 0.5E-6, 10E-6, 50E-6]    # Bounds on parameters
+upper_bounds = [1001, 500E6, 0.21, 1E6, 500E-6, 500E-6]
+max_values = np.array([1000, 500E6, 0.21, 1E6, 500E-6, 500E-6])  # For normilisation of the fitness function
+
+solution = np.array([160, 268.45E6, 0.0395, 1E6, 48E-6, 250E-6])     #Burn back 
+
+
+Test 1.1: 
+num_generations = 2000   # Number of generations
+
+Average Fitness: 0.9293106667473344
+Best Fitness: 0.9517637776463772
+solution [1.6000e+02 2.6845e+08 3.9500e-02 1.0000e+06 4.8000e-05 2.5000e-04]
+Best Solution: [1.59806303e+02 2.68798310e+08 1.00000000e-01 1.00000000e+06
+ 4.81573035e-05 2.50058586e-04]
+Worst Fitness: 0.8552804609930528
+Worst Solution: [1.75549827e+02 2.70971601e+08 1.62691506e-01 7.41845021e+05
+ 4.92960999e-05 2.50175403e-04]
+
+ time taken: 3m 17s
+
+ Test 1.2:
+num_generations = 200   # Number of generations
+
+Average Fitness: 0.9094014169730607
+Best Fitness: 0.9487362501252908
+solution [1.6000e+02 2.6845e+08 3.9500e-02 1.0000e+06 4.8000e-05 2.5000e-04]
+Best Solution: [1.59316973e+02 2.69296633e+08 1.00015633e-01 1.00000000e+06
+ 4.23927776e-05 2.52911042e-04]
+Worst Fitness: 0.7854769019816522
+Worst Solution: [1.84809629e+02 2.69390093e+08 1.06125111e-01 1.04968669e+05
+ 4.39271898e-05 2.29995306e-04]
+
+ time taken: 18s
+
+ Test 1.3:
+ num_generations = 20   # Number of generations
+
+Average Fitness: 0.6672177940365255
+Best Fitness: 0.7919813670564587
+solution [1.6000e+02 2.6845e+08 3.9500e-02 1.0000e+06 4.8000e-05 2.5000e-04]
+Best Solution: [1.38500841e+02 2.61903413e+08 1.00000000e-01 1.22427729e+05
+ 2.93517041e-05 2.44722318e-04]
+Worst Fitness: 0.4300829333048792
+Worst Solution: [9.93172410e+02 4.35257234e+08 1.56723972e-01 9.49024121e+04
+ 2.94629775e-04 3.98074498e-04]
+
+time taken: 2s
+
+
+Test 2:
+Parameters:
+num_variables = 5        # Number of parameters to optimize
+num_generations = 200   # Number of generations
+crossover_rate = 0.8     # Probability of crossover
+mutation_rate = 0.1      # Probability of mutation
+mutation_range = [1, 5E5, 0.01, 1E5, 5E-7, 5E-7]       # Range of mutation This has to be adjusted for test solution
+lower_bounds = [10, 50E6, 0.1, 0.5E-6, 10E-6, 50E-6]    # Bounds on parameters
+upper_bounds = [1001, 500E6, 0.21, 1E6, 500E-6, 500E-6]
+max_values = np.array([1000, 500E6, 0.21, 1E6, 500E-6, 500E-6])  # For normilisation of the fitness function
+
+solution = np.array([160, 268.45E6, 0.0395, 1E6, 48E-6, 250E-6])     #Burn back 
+
+Test 2.1: Note: The parent population is kept at 50% of the population
+population_size = 10000   # Number of individuals in each generation
+num_parents = 5000        # Number of parents selected to breed
+
+Average Fitness: 0.9138864916641045
+Best Fitness: 0.9490635791488692
+solution [1.6000e+02 2.6845e+08 3.9500e-02 1.0000e+06 4.8000e-05 2.5000e-04]
+Best Solution: [1.58739524e+02 2.72907313e+08 1.00000000e-01 1.00000000e+06
+ 4.66126232e-05 2.47713284e-04]
+Worst Fitness: 0.8048509977923848
+Worst Solution: [3.05265401e+02 2.93149624e+08 1.18364183e-01 4.51140240e+05
+ 5.92674793e-05 2.35354543e-04]
+
+time taken: 17s
+
+Test 2.2:
+population_size = 1000   # Number of individuals in each generation
+num_parents = 500        # Number of parents selected to breed
+
+Average Fitness: 0.897848255996732
+Best Fitness: 0.9452600639684169
+solution [1.6000e+02 2.6845e+08 3.9500e-02 1.0000e+06 4.8000e-05 2.5000e-04]
+Best Solution: [1.35653130e+02 2.66912304e+08 1.00000000e-01 1.00000000e+06
+ 4.36706834e-05 2.52131742e-04]
+Worst Fitness: 0.8023174443110023
+Worst Solution: [6.48303039e+01 2.63266174e+08 1.15577477e-01 3.35349750e+05
+ 6.70158496e-05 2.57801168e-04]
+
+time taken: 2s
+
+Test 2.3:
+population_size = 100   # Number of individuals in each generation
+num_parents = 50        # Number of parents selected to breed
+
+Average Fitness: 0.8406595991171204
+Best Fitness: 0.8694589297604071
+solution [1.6000e+02 2.6845e+08 3.9500e-02 1.0000e+06 4.8000e-05 2.5000e-04]
+Best Solution: [1.18815713e+02 3.01334787e+08 1.00000000e-01 6.81549141e+05
+ 5.68531220e-05 2.23979891e-04]
+Worst Fitness: 0.8074908502015253
+Worst Solution: [1.17066873e+02 3.01642098e+08 1.12501827e-01 3.72099299e+05
+ 5.66398351e-05 2.23535270e-04]
+
+time taken: 0.5s
+
+Test 2.4:
+population_size = 100000   # Number of individuals in each generation
+num_parents = 50000        # Number of parents selected to breed
+
+Average Fitness: 0.913918978687243
+Best Fitness: 0.9515044084997695
+solution [1.6000e+02 2.6845e+08 3.9500e-02 1.0000e+06 4.8000e-05 2.5000e-04]
+Best Solution: [1.59151643e+02 2.68495397e+08 1.00000000e-01 1.00000000e+06
+ 4.81955629e-05 2.50774017e-04]
+Worst Fitness: 0.7746897311669224
+Worst Solution: [1.32515010e+02 2.30234863e+08 1.28366204e-01 2.85452720e+05
+ 2.47537093e-05 2.81867044e-04]
+
+time taken: 3m 37s
+
+Test 3:
+parameters:
+population_size = 10000   # Number of individuals in each generation
+num_variables = 5        # Number of parameters to optimize
+num_generations = 200   # Number of generations
+crossover_rate = 0.8     # Probability of crossover
+mutation_rate = 0.1      # Probability of mutation
+mutation_range = [1, 5E5, 0.01, 1E5, 5E-7, 5E-7]       # Range of mutation This has to be adjusted for test solution
+lower_bounds = [10, 50E6, 0.1, 0.5E-6, 10E-6, 50E-6]    # Bounds on parameters
+upper_bounds = [1001, 500E6, 0.21, 1E6, 500E-6, 500E-6]
+max_values = np.array([1000, 500E6, 0.21, 1E6, 500E-6, 500E-6])  # For normilisation of the fitness function
+
+Test 3.1:
+10%
+num_parents = 1000        # Number of parents selected to breed
+
+Average Fitness: 0.9063283112238886
+Best Fitness: 0.9478477548444637
+solution [1.6000e+02 2.6845e+08 3.9500e-02 1.0000e+06 4.8000e-05 2.5000e-04]
+Best Solution: [1.36755163e+02 2.68030809e+08 1.00000000e-01 1.00000000e+06
+ 4.82847722e-05 2.50082734e-04]
+Worst Fitness: 0.7928781262739366
+Worst Solution: [1.26294091e+02 2.43414789e+08 1.18531937e-01 3.48776951e+05
+ 4.74168987e-05 1.84888449e-04]
+
+time taken: 19s
+
+Test 3.2:
+30%
+num_parents = 3000        # Number of parents selected to breed
+
+Average Fitness: 0.9000903334677434
+Best Fitness: 0.9462659992722103
+solution [1.6000e+02 2.6845e+08 3.9500e-02 1.0000e+06 4.8000e-05 2.5000e-04]
+Best Solution: [1.72270240e+02 2.68601601e+08 1.01962015e-01 1.00000000e+06
+ 5.35869447e-05 2.49390748e-04]
+Worst Fitness: 0.795632175111422
+Worst Solution: [1.75568841e+02 2.59182298e+08 1.55777867e-01 4.80791078e+05
+ 3.14667849e-05 2.93061613e-04]
+
+time taken: 18s
+
+Test 3.3:
+50%
+num_parents = 5000        # Number of parents selected to breed
+
+Average Fitness: 0.9127144909683742
+Best Fitness: 0.9500074208236543
+solution [1.6000e+02 2.6845e+08 3.9500e-02 1.0000e+06 4.8000e-05 2.5000e-04]
+Best Solution: [1.63489017e+02 2.66227258e+08 1.00000000e-01 1.00000000e+06
+ 4.93283825e-05 2.50634486e-04]
+Worst Fitness: 0.8192476785432486
+Worst Solution: [1.98711945e+02 2.72895760e+08 1.30333007e-01 4.96758659e+05
+ 2.85854225e-05 2.18849080e-04]
+
+time taken: 18s
+
+Test 3.4:
+70%
+num_parents = 7000        # Number of parents selected to breed
+
+Average Fitness: 0.914348553201686
+Best Fitness: 0.949503258752007
+solution [1.6000e+02 2.6845e+08 3.9500e-02 1.0000e+06 4.8000e-05 2.5000e-04]
+Best Solution: [1.55989306e+02 2.72297938e+08 1.00000000e-01 1.00000000e+06
+ 4.69238219e-05 2.49486858e-04]
+Worst Fitness: 0.789288862813415
+Worst Solution: [1.83094133e+02 1.99420347e+08 1.04089934e-01 2.40698572e+05
+ 4.46820330e-05 2.64802455e-04]
+
+time taken: 19s
+
+Test 3.5:
+90%
+num_parents = 9000        # Number of parents selected to breed
+
+Average Fitness: 0.9149587022811422
+Best Fitness: 0.9499172986251888
+solution [1.6000e+02 2.6845e+08 3.9500e-02 1.0000e+06 4.8000e-05 2.5000e-04]
+Best Solution: [1.59743979e+02 2.69327937e+08 1.00000000e-01 9.96998058e+05
+ 5.10861518e-05 2.49392585e-04]
+Worst Fitness: 0.781695583206929
+Worst Solution: [8.75235069e+01 2.67110602e+08 1.31675007e-01 2.77976317e+05
+ 5.62455246e-05 2.21386063e-04]
+
+time taken: 18s
+
+Test 3.6:
+100%
+num_parents = 10000        # Number of parents selected to breed
+
+Average Fitness: 0.9127663690068428
+Best Fitness: 0.9495841354975966
+solution [1.6000e+02 2.6845e+08 3.9500e-02 1.0000e+06 4.8000e-05 2.5000e-04]
+Best Solution: [1.60386608e+02 2.69295417e+08 1.00000000e-01 1.00000000e+06
+ 4.71134059e-05 2.55274659e-04]
+Worst Fitness: 0.7672380282915575
+Worst Solution: [1.57199508e+02 2.73563308e+08 1.47599711e-01 1.91630847e+05
+ 7.74234215e-05 2.50784098e-04]
+
+time taken: 19s
+
+
+
+
+
+Goals WK2:
+- Make a cut off for when the efficency gets to a certain percentage instead of num_generations.
+- Learn how code for the experiment works.
+- Implement GA into code.
+- Run tests to see what mutation_range is best
+
+mutation_range TEST:
+Look at how big the range should be to get better efficency
+
+Range:
+'no_pulses': 1-1000
+'f_0': 10E5-500E6
+'amplitude': 0.001-0.21
+'freq_sweep','tau': 1E-673.5E6
+'duration': 1E-6-100E-6 
+'delay': 5E-6-100E-5
