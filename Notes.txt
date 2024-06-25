@@ -255,8 +255,6 @@ Worst Solution: [1.57199508e+02 2.73563308e+08 1.47599711e-01 1.91630847e+05
 time taken: 19s
 
 
-
-
 Date: 24/06/2024
 
 Goals WK2:
@@ -266,4 +264,13 @@ Goals WK2:
 - Run tests to see what mutation_range is best
 - Create a complex test function
 write a random function have a and optimize area under it 
-make a test function that looks at a feature of the function (area, etc)
+make a test function that looks at a feature of the function (area, minimise/maximise,etc)
+- Make plots to visualise whats going on
+
+Date: 25/06/2024
+
+completed
+- Make a cut off for when the efficency gets to a certain percentage instead of num_generations.
+- Run tests to see what mutation_range is best
+- Create a complex test function
+- Make plots to visualise whats going on
