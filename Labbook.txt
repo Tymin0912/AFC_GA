@@ -12,7 +12,7 @@ Test 1: Higher num_generations the better Average Fitness but the best fitness r
 Test 2: Small increase in average fitness and best fitness for larger population 
 Test 3: Not much of a change 50% seems best
 
-The issue with the efficency dropping was the the mutation bounds it was not calabrated correctly 
+The issue with the efficiency dropping was the the mutation bounds it was not calabrated correctly 
 It now has been fixed and fitness is back to 99%
 
 Good General parameters:
@@ -258,7 +258,7 @@ time taken: 19s
 Date: 24/06/2024
 
 Goals WK2:
-- Make a cut off for when the efficency gets to a certain percentage instead of num_generations.
+- Make a cut off for when the efficiency gets to a certain percentage instead of num_generations.
 - Learn how code for the experiment works.
 - Implement GA into code.
 - Run tests to see what mutation_range is best
@@ -270,7 +270,25 @@ make a test function that looks at a feature of the function (area, minimise/max
 Date: 25/06/2024
 
 completed
-- Make a cut off for when the efficency gets to a certain percentage instead of num_generations.
+- Make a cut off for when the efficiency gets to a certain percentage instead of num_generations.
 - Run tests to see what mutation_range is best
 - Create a complex test function
 - Make plots to visualise whats going on
+- Write code to find efficiency of echo
+
+
+
+Idea of how to Implement: (for afc component only)
+Make random population (dict)
+take each dict and run it (maybe multiple times for average)
+take the csv files from each run and calculate the efficiency (this will be the fitness)
+select the parents based on the fitness
+run the crossover and mutation with the parents (created new population)
+repeat 
+
+-make the GA work with dictionaries instead of arrays (or either make the code work as normal and at the end turn it into dict to then run in experiment)
+
+
+Date: 27/06/2024
+- Made the functions into seperate files 
+- Started writing GA code for implementation
