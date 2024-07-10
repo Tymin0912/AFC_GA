@@ -1,0 +1,40 @@
+Read Me file for Genetic Algorithm code.
+
+Pesudo Code:
+-Creates a random population of size N
+-Individuals in the population are arrays [x,x,x,x,x]
+-Each variable is a parameters used for one of the steps in the sequence (i.e the pit params)
+-We calculate how good each individual is by the fitness function (looking at how good the echo is)
+-We then randomly select (with a weighted distribution based on the fitness) a percentage of the population to become the parents.
+-We crossover (with a crossover rate) the parents by randomly switching some of the variables with each other this becomes the new population
+If they do not crossover they get copied directly into the new population
+-This repeats until the new population fills up to its original size N
+-We now mutate (with a mutation rate. Only a certain percentage will mutate) every variable within a specific mutation range
+-This our new population generation 2 we repeat this process untill we reach a certain number of generations or a specific fitness.
+
+
+How to use:
+
+To implement it into a specific part of the sequence or (wanting to optimise pit, afc, etc)
+simplified General layout:
+
+define the parameters for the GA (population size, mutation rate, crossover rate, etc)
+
+initial_population = array of randomise parameters  #The initial random population
+
+for j in range(num_generations):      # Loop for number of generations 
+    for i in range(population_size):  # Loop to go through each individual
+        Run code for pop[i] # Implement code you want to run using the GA params
+        Save data           # Store the echo data
+        fitness = fitness_function # Use the saved data to calculate fitness
+    
+    parents = select_function       # After loop i select parents
+    population = crossover_function # Crossover
+    population = mutate_function    # mutate 
+
+    # Loop back to next generation
+
+NOTE: GA code works with arrays but the input has to be a dictionary
+After the population is created 
+
+
