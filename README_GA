@@ -34,7 +34,58 @@ for j in range(num_generations):      # Loop for number of generations
 
     # Loop back to next generation
 
-NOTE: GA code works with arrays but the input has to be a dictionary
-After the population is created 
 
 
+HOW TO USE:
+# Define the GA parameters how GA will preform NOTE: DO NOT CHANGE VARIABLE NAMES
+GA_params = { 'population_size': 1,
+             'num_parents': 1,
+             'num_generations': 1,
+             'crossover_rate': 0.8,
+             'mutation_rate': 0.9,
+             'mutation_range': 0.1}
+
+# Make your sequence you want to run add bounds (x,y) for the range you want and a single value if you want it constant (NOTE: amplitude max 0.21) this is sequence_params 
+sequence_bounds = dict(
+    bounds_pit = {'no_pulses': (1, 1001),
+                 'f_0': 250E6,
+                'amplitude': (0.001, 0.21),
+                'f_sweep': 12E6/4,
+                'duration': (10E-6, 100E-6),
+                'delay': (10E-6, 300E-6),
+                'phase': 0},
+
+    bounds_burn_back = {'no_pulses': (1, 1001),
+                'f_0': (10E5, 500E6),
+                'amplitude': (0.001, 0.21),
+                'freq_sweep': (0.1E-6, 5E6),
+                'duration': (10E-6, 100E-6),
+                'delay': (10E-6, 300E-6),
+                'phase': 0},
+
+    bounds_clean = {'no_pulses': (1, 1001),
+                'f_0': (10E5, 500E6),
+                'amplitude': (0.001, 0.21),
+                'freq_sweep': (0.1E-6, 5E6),
+                'duration': (10E-6, 100E-6),
+                'delay': (10E-6, 300E-6),
+                'phase': 0}
+)
+
+# Generates initial population
+sequence_params = initial_population_function
+
+for j in range(GA_params[num_generations]):      # Loop for number of generations 
+    for i in range(GA_params[population_size]):  # Loop to go through each individual
+
+        # compile and upload to HDAWG
+        # Run HDAWG Sequence
+        Run code for sequence_params[i] # Run code 
+
+        Save data           # Store the echo data
+
+        fitness = fitness_function # Use the saved data to calculate fitness
+    
+    parents = parentselect_function       # After loop i select parents
+    population = crossover_function # Crossover
+    population = mutate_function    # mutate 
