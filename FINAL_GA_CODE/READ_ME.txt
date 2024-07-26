@@ -1,5 +1,12 @@
 Read Me file for Genetic Algorithm code.
 
+STILL NEED TO DO:
+- You need to write code to save the .csv files where you want them and have them indexed so that the 
+fitness function can take the right files and calculate the efficiency.
+- Write the code that does the hdawg stuff so that when you run the code it will run the sequence_params.
+- These parts are highlighted with ### in the HOW TO USE section.
+
+
 Pesudo Code:
 -Creates a random population of size N
 -Individuals in the population are arrays [x,x,x,x,x]
@@ -14,7 +21,7 @@ If they do not crossover they get copied directly into the new population
 
 
 HOW TO USE:
-# The functions are all in NEW_GA_functions 
+# The functions are all in GA_functions.ipynb 
 # NOTE: Use old fitness fuction (or write your own depending on what you want to base the fitness on)
 
 import numpy as np
@@ -67,12 +74,15 @@ fit = np.zeros((GA_params['num_generations']),(GA_params['population_size']))
 for i in range(GA_params['num_generations']):     # Loop to go through each generation
 
     for j in range(GA_params['population_size']): # Loop to go though each individual
-        # compile and upload to HDAWG
-        # Run HDAWG Sequence  
-        #run code with this line below it picks out the correct individual 
+        ### compile and upload to HDAWG
+        ### Run HDAWG Sequence  
+        ### run code with this line below this line is what your sequence_params is  
         run_hdawg = {key: sequence_params[key][j] for key in sequence_params}
 
-        # save echo_data_folder, input_data_folder, cross_data_folder NOTE this function may need to be changed 
+        ### save echo_data_folder{j}, input_data_folder{j}, cross_data_folder{j} 
+        ### Recommend to save folders gen_{i} and then the above inside these 
+        ### You will need to change the fitness folder to correctly pick the right files 
+        ### (This has already been done previously so you can modify the old code. ask Finley)
         fit[i,j] = fitness(echo_data_folder, input_data_folder, cross_data_folder)
 
     # Saves the population
@@ -88,6 +98,8 @@ for i in range(GA_params['num_generations']):     # Loop to go through each gene
 optimal_params = optimal_solution(fit, params_GA_save, GA_params)
 print("\Optimal Params :\n", optimal_params)
 
+
+
 Additional Notes:
 - You may only need a small population size for GA to work instead of large one. 
 Why: if the optimal solution is hard to come by then most of the pop will be 0.
@@ -100,6 +112,7 @@ GA_params = { 'population_size': 10, # need to test more but 10-20 seem to work 
              'crossover_rate': 0.8,  # 80% seems best
              'mutation_rate': 0.01,  # 1% seems best
              'mutation_range': 0.05} # need to test this out as previously it was individual values for each param
+
 
 Future things to do/implement:
 - Make new parentselect function that does a tournement style selection (Atm its random wheel with weighted prob.)
