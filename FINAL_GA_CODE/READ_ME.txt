@@ -7,7 +7,8 @@ fitness function can take the right files and calculate the efficiency.
 - These parts are highlighted with ### in the HOW TO USE section.
 
 
-Pesudo Code:
+Pesudo Code: 
+NOTE: This is for when the code worked with arrays it now does it all in dictionaries. same concept.
 -Creates a random population of size N
 -Individuals in the population are arrays [x,x,x,x,x]
 -Each variable is a parameters used for one of the steps in the sequence (i.e the pit params)
